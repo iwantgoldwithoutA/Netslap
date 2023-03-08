@@ -30,6 +30,12 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField]
     private Animator anim;
 
+    [SerializeField]
+    private GameObject camHolder , third;
+
+    [SerializeField]
+    private SlapControl slap;
+
 
 
 
@@ -85,6 +91,10 @@ public class PlayerMovement : NetworkBehaviour
 
         if (!isLocalPlayer)
         {
+            camHolder.SetActive(false);
+            third.SetActive(false);
+            slap.enabled = false;
+            this.enabled = false;
             return;
         }
         
@@ -121,10 +131,6 @@ public class PlayerMovement : NetworkBehaviour
     }
     private void FixedUpdate()
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
 
         MovePlayer();
        

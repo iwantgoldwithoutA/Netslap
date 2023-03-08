@@ -2200,9 +2200,11 @@ GameObject:
   - component: {fileID: 6064403451951821948}
   - component: {fileID: 6064403451951821951}
   - component: {fileID: 6064403451951821831}
-  - component: {fileID: 6064403451951821828}
   - component: {fileID: 6064403451951821829}
   - component: {fileID: 9160190582186895913}
+  - component: {fileID: 6946096992626840627}
+  - component: {fileID: 2871231845461718276}
+  - component: {fileID: 4709203851548320448}
   m_Layer: 0
   m_Name: Players
   m_TagString: Untagged
@@ -2261,6 +2263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bedec4a9a43c6a74da580cbc3e578768, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
   moveSpeed: 2
   ShiftPress: 0
   Orientation: {fileID: 6064403451755203816}
@@ -2272,6 +2277,9 @@ MonoBehaviour:
   Space: 32
   fire1: 323
   anim: {fileID: 379291271551228806}
+  camHolder: {fileID: 6920664245357829684}
+  third: {fileID: 5738689750379461373}
+  slap: {fileID: 379291271551228807}
   Ground:
     serializedVersion: 2
     m_Bits: 1024
@@ -2309,34 +2317,6 @@ MonoBehaviour:
   serverOnly: 0
   visible: 0
   hasSpawned: 0
---- !u!114 &6064403451951821828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6064403451951821925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  target: {fileID: 6064403451951821947}
-  clientAuthority: 0
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 0
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
 --- !u!114 &6064403451951821829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2368,6 +2348,74 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   matchID: 
+--- !u!114 &6946096992626840627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064403451951821925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 379291271551228806}
+--- !u!114 &2871231845461718276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064403451951821925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83392ae5c1b731446909f252fd494ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
+  target: {fileID: 6064403451951821951}
+  clientAuthority: 0
+  syncVelocity: 1
+  clearVelocity: 0
+  velocitySensitivity: 0.1
+  syncAngularVelocity: 1
+  clearAngularVelocity: 0
+  angularVelocitySensitivity: 0.1
+--- !u!114 &4709203851548320448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064403451951821925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 6064403451951821947}
+  clientAuthority: 0
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  showGizmos: 1
+  showOverlay: 1
+  overlayColor: {r: 1, g: 0.98490566, b: 0.98490566, a: 0.5}
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 2
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
 --- !u!1 &6319424319881188018
 GameObject:
   m_ObjectHideFlags: 0

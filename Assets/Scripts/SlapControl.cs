@@ -1,5 +1,7 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,6 +10,8 @@ public class SlapControl : MonoBehaviour
     // Start is called before the first frame update
 
     public static SlapControl Instance;
+
+    
 
     private void Awake()
     {
@@ -19,9 +23,9 @@ public class SlapControl : MonoBehaviour
     public CapsuleCollider col;
     public int Speed;
 
-
     public void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Anim.SetBool("IsFire", true);
