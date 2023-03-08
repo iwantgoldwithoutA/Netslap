@@ -12,6 +12,6 @@ public class UIPlayerBox : MonoBehaviour
     public void SetPlayer(PlayerBox player)
     {
         this.player = player;
-        PlayerText.text = "NOSE";
+        PlayerText.text = "JOHN DOE";
     }
 }

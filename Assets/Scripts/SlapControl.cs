@@ -23,7 +23,7 @@ public class SlapControl : MonoBehaviour
     public CapsuleCollider col;
     public int Speed;
 
-    public void FixedUpdate()
+    public void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
