@@ -41,6 +41,13 @@ public class PlayerMovement : NetworkBehaviour
 
     public LayerMask Ground;
     public bool grounded;
+    private CharacterController controller;
+    private Vector3 playerVelocity;
+    private bool groundedPlayer;
+    private float playerSpeed = 2.0f;
+    private float jumpHeight = 1.0f;
+    private float gravityValue = -9.81f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -50,42 +57,13 @@ public class PlayerMovement : NetworkBehaviour
 
         rb= GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        controller = GetComponent<CharacterController>();
 
 
-        
     }
 
-    // Update is called once per frame
-    private void MyInput() 
-    {
-        HorizontalInput = Input.GetAxisRaw("Horizontal");
-        VerticalInput = Input.GetAxisRaw("Vertical");
-
-       
-    }
-
-    private void MovePlayer() 
     
-    {
-        moveDir = Orientation.forward * VerticalInput + Orientation.right * HorizontalInput;
 
-        if (grounded)
-        {
-            rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
-        }
-
-        else if (!grounded) 
-        {
-            rb.AddForce(moveDir.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
-        }
-
-        //Animation
-
-        Vector3 anim_state = new Vector3(moveDir.x , 0 , moveDir.z);
-
-        anim.SetBool("IsWalk" , anim_state.normalized.magnitude != 0);
-           
-    }
     void Update()
     {
 
@@ -97,97 +75,55 @@ public class PlayerMovement : NetworkBehaviour
             this.enabled = false;
             return;
         }
-        
 
-        MyInput();
+        HorizontalInput = Input.GetAxisRaw("Horizontal");
+        VerticalInput = Input.GetAxisRaw("Vertical");
 
-
-        SpeedCon();
-        if (grounded)
+        groundedPlayer = controller.isGrounded;
+        if (groundedPlayer && playerVelocity.y < 0)
         {
-            rb.drag = groundDrag;
-
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                moveSpeed = 5f;
-                airMultiplier = 2.0f;
-                anim.SetBool("IsSprint", true);
-            }
-            else
-            {
-                moveSpeed = 2f;
-                airMultiplier = 1f;
-                anim.SetBool("IsSprint", false);
-            }
-
-        }
-        else 
-        {
-            rb.drag = 0;
+            playerVelocity.y = 0f;
         }
 
-
-
-    }
-    private void FixedUpdate()
-    {
-
-        MovePlayer();
-       
-           
-
-        
-
-        if (Input.GetKey(Space) && grounded)
+        if (Input.GetKey(KeyCode.LeftShift))
         {
-
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-            anim.SetBool("IsJump", true);
-
-
+            playerSpeed = 5f;
+            airMultiplier = 2.0f;
+            anim.SetBool("IsSprint", true);
         }
         else
         {
-            anim.SetBool("IsJump", !grounded);
+            playerSpeed = 2f;
+            airMultiplier = 1f;
+            anim.SetBool("IsSprint", false);
         }
 
+        Vector3 move = Orientation.forward * VerticalInput + Orientation.right * HorizontalInput;
+        controller.Move(move * Time.deltaTime * playerSpeed);
 
-       
-        
 
+        Vector3 checkWalk = new Vector3(move.x , 0 , move.z);
+        anim.SetBool("IsWalk", checkWalk.normalized.magnitude > 0);
 
-    }
-
-    private void SpeedCon() 
-    {
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        if(flatVel.magnitude > moveSpeed) 
+        // Changes the height position of the player..
+        if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
-            Vector3 limitVel = flatVel.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitVel.x, rb.velocity.y, limitVel.z);
-        }
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.transform.CompareTag("Ground"))
+            anim.SetBool("IsJump", true);
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+        } else
         {
-            grounded = true;
+            anim.SetBool("IsJump", false);
         }
-    }
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
 
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.transform.CompareTag("Ground"))
-        {
-            grounded = false;
-        }
     }
+   
+
+
+
+   
 
 }
 
