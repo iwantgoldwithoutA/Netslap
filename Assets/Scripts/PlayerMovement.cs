@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     public float moveSpeed;
     public bool ShiftPress;
@@ -83,6 +83,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
+        if (!isLocalPlayer)
+        {
+            return;
+        }
         
 
         MyInput();
@@ -117,8 +121,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
 
-      
         MovePlayer();
        
            
