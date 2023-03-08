@@ -10,5 +10,10 @@ public class SlapEvent : MonoBehaviour
         {
             SlapControl.Instance.SlapReturn(other.gameObject);
         }
+
+        if (other.gameObject.CompareTag("Player")) 
+        {
+            SlapControl.Instance.SlapReturn(other.gameObject);
+        }
     }
 }

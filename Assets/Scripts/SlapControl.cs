@@ -11,8 +11,13 @@ public class SlapControl : MonoBehaviour
 
     public static SlapControl Instance;
 
-    
+    AudioSource Ad;
+    public AudioClip Yaheuy;
 
+    public void Start()
+    {
+        Ad = GetComponent<AudioSource>();
+    }
     private void Awake()
     {
         Instance = this;
@@ -38,7 +43,8 @@ public class SlapControl : MonoBehaviour
 
     public void EnableCol()
     {
-        col.enabled = true;  
+        col.enabled = true;
+        Ad.PlayOneShot(Yaheuy);
     }
 
     public void DisableCol()

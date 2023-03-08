@@ -1,13 +1,12 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 public class PlayerMovement : NetworkBehaviour
 {
-    public float moveSpeed;
-    public bool ShiftPress;
 
     public Transform Orientation;
 
@@ -15,14 +14,12 @@ public class PlayerMovement : NetworkBehaviour
     float VerticalInput;
 
 
-    Vector3 moveDir;
+    AudioSource Ad;
+    public AudioClip Jump, BGM, Run;
+
+
 
     Rigidbody rb;
-    public float playerHeight;
-    public float groundDrag;
-    public float jumpForce;
-    public float jumpCooldown;
-    public float airMultiplier;
     public KeyCode Space = KeyCode.Space;
     public KeyCode fire1 = KeyCode.Mouse0;
 
@@ -48,17 +45,19 @@ public class PlayerMovement : NetworkBehaviour
     private float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
 
+    bool IsBGM = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
 
 
-
+        Ad = GetComponent<AudioSource>();
         rb= GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         controller = GetComponent<CharacterController>();
-
+        Ad.PlayOneShot(BGM);
 
     }
 
@@ -79,6 +78,7 @@ public class PlayerMovement : NetworkBehaviour
         HorizontalInput = Input.GetAxisRaw("Horizontal");
         VerticalInput = Input.GetAxisRaw("Vertical");
 
+
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -87,20 +87,22 @@ public class PlayerMovement : NetworkBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
+
             playerSpeed = 5f;
-            airMultiplier = 2.0f;
             anim.SetBool("IsSprint", true);
+
+          
+            
         }
         else
         {
             playerSpeed = 2f;
-            airMultiplier = 1f;
             anim.SetBool("IsSprint", false);
         }
 
         Vector3 move = Orientation.forward * VerticalInput + Orientation.right * HorizontalInput;
         controller.Move(move * Time.deltaTime * playerSpeed);
-
+       
 
         Vector3 checkWalk = new Vector3(move.x , 0 , move.z);
         anim.SetBool("IsWalk", checkWalk.normalized.magnitude > 0);
@@ -108,22 +110,26 @@ public class PlayerMovement : NetworkBehaviour
         // Changes the height position of the player..
         if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
-            anim.SetBool("IsJump", true);
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        } else
-        {
-            anim.SetBool("IsJump", false);
+            Ad.PlayOneShot(Jump);
         }
+
+        anim.SetBool("IsJump", !groundedPlayer);
+        
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
 
     }
-   
 
+    public void RUNN() 
+    {
 
-
-   
+    }
+    public void ENDRUNN() 
+    {
+        
+    }
 
 }
 

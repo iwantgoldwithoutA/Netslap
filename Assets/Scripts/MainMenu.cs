@@ -190,6 +190,9 @@ public class MainMenu : NetworkBehaviour
         newTurnManager.GetComponent<NetworkMatch>().matchId = matchID.ToGuid();
         TurnManager turnManager = newTurnManager.GetComponent<TurnManager>();
 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         for (int i = 0; i < matches.Count; i++)
         {
             if (matches[i].ID == matchID)
