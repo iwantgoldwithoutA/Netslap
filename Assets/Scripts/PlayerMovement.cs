@@ -86,8 +86,10 @@ public class PlayerMovement : NetworkBehaviour
         anim.SetBool("IsWalk" , anim_state.normalized.magnitude != 0);
            
     }
-    void Update()
+
+    private void FixedUpdate()
     {
+
 
         if (!isLocalPlayer)
         {
@@ -97,7 +99,7 @@ public class PlayerMovement : NetworkBehaviour
             this.enabled = false;
             return;
         }
-        
+
 
         MyInput();
 
@@ -121,16 +123,13 @@ public class PlayerMovement : NetworkBehaviour
             }
 
         }
-        else 
+        else
         {
             rb.drag = 0;
         }
 
 
 
-    }
-    private void FixedUpdate()
-    {
 
         MovePlayer();
        

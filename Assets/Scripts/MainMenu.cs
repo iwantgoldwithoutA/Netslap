@@ -43,7 +43,7 @@ public class MainMenu : NetworkBehaviour
         instance = this;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!inGame)
         {

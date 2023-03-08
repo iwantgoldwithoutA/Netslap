@@ -18,7 +18,7 @@ public class ThirdPersonCam : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void    Update()
     {
         Vector3 viewDir = Players.position - new Vector3(transform.position.x, Players.position.y, transform.position.z);
         Orientation.forward = viewDir.normalized;
