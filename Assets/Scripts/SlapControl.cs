@@ -5,14 +5,14 @@ using System.Net.Sockets;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SlapControl : MonoBehaviour
+public class SlapControl : NetworkBehaviour
 {
     // Start is called before the first frame update
 
     public static SlapControl Instance;
 
     AudioSource Ad;
-    public AudioClip Yaheuy;
+    public AudioClip Yaheuy, JUMP, RUNN;
 
     public void Start()
     {
@@ -39,6 +39,7 @@ public class SlapControl : MonoBehaviour
         {
             Anim.SetBool("IsFire", false);
         }
+
     }
 
     public void EnableCol()
@@ -50,13 +51,24 @@ public class SlapControl : MonoBehaviour
     public void DisableCol()
     {
         col.enabled = false;
+        
     }
 
     public void SlapReturn(GameObject other)
     {
-        
-        other.gameObject.GetComponent<Rigidbody>().AddForce(Speed * transform.forward , ForceMode.Impulse);
+
+        other.GetComponent<PlayerBox>().CmdAttack(this.transform , Speed);
         
     }
+
+    public void JUMPON() 
+    {
+        Ad.PlayOneShot(JUMP);
+    }
+    public void JUMPOFF() 
+    {
+       
+    }
+
 }
 

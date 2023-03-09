@@ -10,8 +10,12 @@ public class PlayerBox : NetworkBehaviour
     public static PlayerBox localPlayer;
     [SyncVar] public string matchID;
 
+    [SyncVar(hook = nameof(AttackHook))]
+    public bool IsAttack = false;
+
     private NetworkMatch networkMatch;
 
+    public Rigidbody RG;
     private void Start()
     {
         networkMatch = GetComponent<NetworkMatch>();
@@ -113,6 +117,38 @@ public class PlayerBox : NetworkBehaviour
         DontDestroyOnLoad(gameObject);
         MainMenu.instance.inGame = true;
         SceneManager.LoadSceneAsync("Game");
+    }
+
+
+    //Attack
+
+    [Command(requiresAuthority = false)]
+    public void CmdAttack(Transform point , float Speed)
+    {
+        IsAttack = true;
+
+        
+
+        GetComponent<Animator>().enabled = false;
+        RG.GetComponent<Rigidbody>().AddForce(Speed * Vector3.up, ForceMode.Impulse);
+
+        StartCoroutine(wait_enable());
+    }
+
+    void AttackHook(bool _ , bool new_attack)
+    {
+        if (new_attack)
+        {
+            GetComponent<Animator>().enabled = false;
+            StartCoroutine(wait_enable());
+        }
+    }
+
+    IEnumerator wait_enable()
+    {
+        yield return new WaitForSeconds(3.0f);
+        IsAttack = false;
+        GetComponent<Animator>().enabled = true;
     }
 
 }

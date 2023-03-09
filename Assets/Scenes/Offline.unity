@@ -163,7 +163,7 @@ MonoBehaviour:
   offlineScene: Assets/Scenes/Offline.unity
   onlineScene: Assets/Scenes/Lobby.unity
   transport: {fileID: 392751833}
-  networkAddress: localhost
+  networkAddress: 34.124.248.102
   maxConnections: 100
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 4176268378434428293, guid: a4d18839401846f4d83c3932d76247a8, type: 3}
@@ -211,9 +211,9 @@ MonoBehaviour:
   MaximizeSocketBuffers: 1
   ReliableMaxMessageSize: 298449
   UnreliableMaxMessageSize: 1199
-  debugLog: 1
+  debugLog: 0
   statisticsGUI: 0
-  statisticsLog: 1
+  statisticsLog: 0
 --- !u!114 &392751834
 MonoBehaviour:
   m_ObjectHideFlags: 0
